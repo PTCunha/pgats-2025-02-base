@@ -55,7 +55,7 @@ module.exports = {
         }
       }
     },
-    '/api/checkout': {
+  '/api/checkout': {
       post: {
         summary: 'Realizar checkout',
         security: [{ bearerAuth: [] }],
@@ -98,6 +98,31 @@ module.exports = {
           200: { description: 'Checkout realizado' },
           401: { description: 'Token inválido' },
           400: { description: 'Erro no checkout' }
+        }
+      }
+    },
+    '/api/transfers': {
+      post: {
+        summary: 'Criar transferência',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  from: { type: 'string', description: 'ID ou nome do remetente' },
+                  to: { type: 'string', description: 'ID ou nome do destinatário' },
+                  amount: { type: 'number', description: 'Valor da transferência' }
+                },
+                required: ['from', 'to', 'amount']
+              }
+            }
+          }
+        },
+        responses: {
+          201: { description: 'Transferência criada com sucesso' },
+          400: { description: 'Campos obrigatórios ausentes ou inválidos' }
         }
       }
     }
